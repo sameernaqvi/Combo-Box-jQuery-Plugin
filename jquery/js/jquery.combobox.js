@@ -86,7 +86,7 @@
         
         setValue : function (value) {
             var oldValue = this.textInputElement.val();
-            this.textInputElement.val(value);
+            this.textInputElement.val(decodeHTML(value));
             if (oldValue != value) {
                 this.textInputElement.trigger('change');
             }
@@ -241,13 +241,18 @@
         
         getSelectedValue : function () {
             if(this.selectedIndex !== -1){
-                return this.selectorElement.find('li').get(this.selectedIndex).innerHTML;
+                return decodeHTML(this.selectorElement.find('li').get(this.selectedIndex).innerHTML);
             } else {
                 return this.combobox.textInputElement.val();
             }
         }
 
     };
-
+    /* This is added by Sameer to convert the &amp; into & */ 
+	var decodeHTML = function (html) {
+		var txt = document.createElement('textarea');
+		txt.innerHTML = html;
+		return txt.value;
+	};
 
 })();
